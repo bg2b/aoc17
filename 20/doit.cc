@@ -11,6 +11,7 @@
 #include <set>
 #include <algorithm>
 #include <cmath>
+#include <optional>
 #include <cassert>
 
 using namespace std;
