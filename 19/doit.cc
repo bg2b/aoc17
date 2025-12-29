@@ -14,15 +14,19 @@ using namespace std;
 using coords = pair<int, int>;
 
 coords operator+(coords const &c1, coords const &c2) {
-  return { c1.first + c2.first, c1.second + c2.second };
+  return {c1.first + c2.first, c1.second + c2.second};
 }
 
 coords direction(unsigned index) {
   switch (index % 4) {
-  case 0:  return { -1, 0 };
-  case 1:  return { 0, +1 };
-  case 2:  return { +1, 0 };
-  default: return { 0, -1 };
+  case 0:
+    return {-1, 0};
+  case 1:
+    return {0, +1};
+  case 2:
+    return {+1, 0};
+  default:
+    return {0, -1};
   }
 }
 
@@ -47,7 +51,7 @@ routing::routing() {
   }
   assert(diagram.front().find('|') != string::npos);
   assert(diagram.back() == string(diagram.back().length(), ' '));
-  start = { 0, diagram.front().find('|') };
+  start = {0, diagram.front().find('|')};
 }
 
 pair<string, unsigned> routing::follow() const {
@@ -69,11 +73,11 @@ pair<string, unsigned> routing::follow() const {
     pos = pos + direction(dir);
     ++steps;
   }
-  return { passed, steps };
+  return {passed, steps};
 }
 
-void part1() { cout << routing().follow().first << '\n';  }
-void part2() { cout << routing().follow().second << '\n';  }
+void part1() { cout << routing().follow().first << '\n'; }
+void part2() { cout << routing().follow().second << '\n'; }
 
 int main(int argc, char **argv) {
   if (argc != 2) {

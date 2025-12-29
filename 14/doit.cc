@@ -83,7 +83,7 @@ string hashed(string const &bytes) {
   vector<int> lengths;
   for (auto c : bytes)
     lengths.push_back(c);
-  for (int extra : { 17, 31, 73, 47, 23 })
+  for (int extra : {17, 31, 73, 47, 23})
     lengths.push_back(extra);
   hasher h(lengths);
   for (int _ = 0; _ < 64; ++_)
@@ -106,8 +106,8 @@ void disk_map(function<void(unsigned row, string const &hsh)> fn) {
 void part1() {
   unsigned used = 0;
   disk_map([&](unsigned, string const &hsh) {
-             used += count(hsh.begin(), hsh.end(), '@');
-           });
+    used += count(hsh.begin(), hsh.end(), '@');
+  });
   cout << used << '\n';
 }
 
@@ -163,20 +163,20 @@ void part2() {
   vector<unsigned> used;
   // Sweep over the disk
   disk_map([&](unsigned row, string const &hsh) {
-             assert(hsh.size() == grid_size);
-             for (unsigned col = 0; col < grid_size; ++col)
-               if (hsh[col] == '@') {
-                 // Save each used sector
-                 auto ndx = s.index({ row, col });
-                 used.push_back(ndx);
-                 // Link to adjacent used sectors
-                 if (row > 0 && last_hsh[col] == '@')
-                   s.adjacent(ndx, s.index({ row - 1, col }));
-                 if (col + 1 < grid_size && hsh[col + 1] == '@')
-                   s.adjacent(ndx, s.index({ row, col + 1 }));
-               }
-             last_hsh = hsh;
-           });
+    assert(hsh.size() == grid_size);
+    for (unsigned col = 0; col < grid_size; ++col)
+      if (hsh[col] == '@') {
+        // Save each used sector
+        auto ndx = s.index({row, col});
+        used.push_back(ndx);
+        // Link to adjacent used sectors
+        if (row > 0 && last_hsh[col] == '@')
+          s.adjacent(ndx, s.index({row - 1, col}));
+        if (col + 1 < grid_size && hsh[col + 1] == '@')
+          s.adjacent(ndx, s.index({row, col + 1}));
+      }
+    last_hsh = hsh;
+  });
   // Count the groups
   unsigned num_groups = 0;
   for (auto ndx : used)

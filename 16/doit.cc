@@ -42,10 +42,10 @@ void read() {
       char c1 = move[1];
       char c2 = move[3];
       add([=](string &s) {
-            auto x1 = s.find(c1);
-            auto x2 = s.find(c2);
-            swap(s[x1], s[x2]);
-          });
+        auto x1 = s.find(c1);
+        auto x2 = s.find(c2);
+        swap(s[x1], s[x2]);
+      });
     }
   }
 }

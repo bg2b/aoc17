@@ -43,7 +43,7 @@ pair<int, int> process(string const &s) {
     ++i;
   }
   assert(active_groups == 0);
-  return { total_score, garbage_removed };
+  return {total_score, garbage_removed};
 }
 
 void part1() {

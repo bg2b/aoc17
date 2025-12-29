@@ -34,17 +34,11 @@ using namespace std;
 using coord = pair<int, int>;
 
 coord operator+(coord const &c1, coord const &c2) {
-  return { c1.first + c2.first, c1.second + c2.second };
+  return {c1.first + c2.first, c1.second + c2.second};
 }
 
-map<string, coord> dirs{
-  { "n", { +1, 0 } },
-  { "ne", { 0, +1 } },
-  { "se", { -1, +1 } },
-  { "s", { -1, 0 } },
-  { "sw", { 0, -1 } },
-  { "nw", { +1, -1 } }
-};
+map<string, coord> dirs{{"n", {+1, 0}}, {"ne", {0, +1}}, {"se", {-1, +1}},
+                        {"s", {-1, 0}}, {"sw", {0, -1}}, {"nw", {+1, -1}}};
 
 // For distance (number of steps), if a point is in the first or third
 // "quadrants" (n and ne coefficients have the same sign), then it's
@@ -55,7 +49,7 @@ int distance(coord const &c) {
   if (n * ne < 0)
     // This is in a quadrant where a move se or nw is useful.  One of
     // those can be used min(abs(n), abs(ne)) times to reduce the
-    // smaller magnitude coordinate to 0, i.e., 
+    // smaller magnitude coordinate to 0, i.e.,
     //   int diag = min(abs(n), abs(ne));
     // Whatever's left can be gone to directly by n, ne, s, or sw.
     //   int straight = max(abs(n), abs(ne)) - diag;
@@ -71,9 +65,9 @@ pair<int, int> child_meanderings() {
   string steps;
   cin >> steps;
   steps.push_back(',');
-  coord child{ 0, 0 };
+  coord child{0, 0};
   int max_dist = 0;
-  for (size_t pos = 0; pos < steps.length(); ) {
+  for (size_t pos = 0; pos < steps.length();) {
     size_t next_pos = steps.find(',', pos);
     string dir = steps.substr(pos, next_pos - pos);
     auto p = dirs.find(dir);
@@ -82,7 +76,7 @@ pair<int, int> child_meanderings() {
     max_dist = max(max_dist, distance(child));
     pos = next_pos + 1;
   }
-  return { distance(child), max_dist };
+  return {distance(child), max_dist};
 }
 
 void part1() { cout << child_meanderings().first << '\n'; }

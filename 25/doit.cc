@@ -44,12 +44,12 @@ struct turing_machine {
 
 turing_machine::turing_machine() {
   auto get = [](string const &what) {
-               string line;
-               getline(cin, line);
-               auto pos = line.find(what);
-               assert(pos != string::npos);
-               return line.substr(pos + what.length() + 1);
-             };
+    string line;
+    getline(cin, line);
+    auto pos = line.find(what);
+    assert(pos != string::npos);
+    return line.substr(pos + what.length() + 1);
+  };
   current = get("state")[0] - 'A';
   steps = stoi(get("after"));
   string blank;
@@ -109,9 +109,7 @@ void part1() {
   cout << tm.checksum() << '\n';
 }
 
-void part2() {
-  cout << "Reboot the Printer!\n";
-}
+void part2() { cout << "Reboot the Printer!\n"; }
 
 int main(int argc, char **argv) {
   if (argc != 2) {

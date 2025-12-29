@@ -16,9 +16,7 @@ bool is_square(vector<string> const &ss) {
   return !ss.empty() && ss.size() == ss.front().size();
 }
 
-vector<string> start = { ".#.",
-                         "..#",
-                         "###" };
+vector<string> start = {".#.", "..#", "###"};
 
 size_t count_pixels(vector<string> const &ss) {
   size_t result = 0;

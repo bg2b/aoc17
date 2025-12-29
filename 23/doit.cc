@@ -41,7 +41,10 @@ struct coprocessor {
 
   // Regular pc incrementing is going to add one, so have to adjust
   // for that
-  void jnz(num test, num offset) { if (test != 0) pc += offset - 1; }
+  void jnz(num test, num offset) {
+    if (test != 0)
+      pc += offset - 1;
+  }
 
   void execute();
 };
@@ -50,35 +53,31 @@ coprocessor::coprocessor() {
   for (size_t i = 0; i < reg.size(); ++i)
     reg[i] = 0;
   auto ri = []() -> reg_imm {
-              string arg;
-              cin >> arg;
-              if (arg.length() == 1 && arg[0] >= 'a' && arg[0] <= 'h')
-                return { true, arg[0] - 'a' };
-              return { false, stoi(arg) };
-            };
+    string arg;
+    cin >> arg;
+    if (arg.length() == 1 && arg[0] >= 'a' && arg[0] <= 'h')
+      return {true, arg[0] - 'a'};
+    return {false, stoi(arg)};
+  };
   auto add = [&](instr const &i) { instructions.push_back(i); };
   string op;
   while (cin >> op) {
     reg_imm arg1 = ri();
     reg_imm arg2 = ri();
     if (op == "set")
-      add([=](coprocessor &copr) {
-            copr.set(arg1, copr.get(arg2));
-          });
+      add([=](coprocessor &copr) { copr.set(arg1, copr.get(arg2)); });
     else if (op == "sub")
       add([=](coprocessor &copr) {
-            copr.set(arg1, copr.get(arg1) - copr.get(arg2));
-          });
+        copr.set(arg1, copr.get(arg1) - copr.get(arg2));
+      });
     else if (op == "mul")
       add([=](coprocessor &copr) {
-            ++copr.num_muls;
-            copr.set(arg1, copr.get(arg1) * copr.get(arg2));
-          });
+        ++copr.num_muls;
+        copr.set(arg1, copr.get(arg1) * copr.get(arg2));
+      });
     else {
       assert(op == "jnz");
-      add([=](coprocessor &copr) {
-            copr.jnz(copr.get(arg1), copr.get(arg2));
-          });
+      add([=](coprocessor &copr) { copr.jnz(copr.get(arg1), copr.get(arg2)); });
     }
   }
 }

@@ -11,7 +11,7 @@ using namespace std;
 
 pair<int, int> to_grid(int index) {
   if (index == 1)
-    return { 0, 0 };
+    return {0, 0};
   // Consecutive rings end with odd squares.  Counting rings starting
   // from 0, find the ring for the index
   auto ring_end = [](int ring) { return (2 * ring + 1) * (2 * ring + 1); };
@@ -53,7 +53,7 @@ void part2() {
   int threshold;
   cin >> threshold;
   map<pair<int, int>, int> sums;
-  sums[{ 0, 0 }] = 1;
+  sums[{0, 0}] = 1;
   int index = 1;
   while (sums[to_grid(index)] <= threshold) {
     ++index;
@@ -61,8 +61,8 @@ void part2() {
     int sum_adj = 0;
     for (int dx = -1; dx <= +1; ++dx)
       for (int dy = -1; dy <= +1; ++dy)
-        sum_adj += sums[{ x + dx, y + dy }];
-    sums[{ x, y }] = sum_adj;
+        sum_adj += sums[{x + dx, y + dy}];
+    sums[{x, y}] = sum_adj;
   }
   cout << sums[to_grid(index)] << '\n';
 }

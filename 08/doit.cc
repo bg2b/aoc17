@@ -11,12 +11,18 @@
 using namespace std;
 
 bool compare(string const &cmp, int v1, int v2) {
-  if (cmp == "==")    return v1 == v2;
-  if (cmp == "!=")    return v1 != v2;
-  if (cmp == ">=")    return v1 >= v2;
-  if (cmp == "<=")    return v1 <= v2;
-  if (cmp == ">")     return v1 > v2;
-  assert(cmp == "<"); return v1 < v2;
+  if (cmp == "==")
+    return v1 == v2;
+  if (cmp == "!=")
+    return v1 != v2;
+  if (cmp == ">=")
+    return v1 >= v2;
+  if (cmp == "<=")
+    return v1 <= v2;
+  if (cmp == ">")
+    return v1 > v2;
+  assert(cmp == "<");
+  return v1 < v2;
 }
 
 pair<int, int> execute() {
@@ -35,7 +41,7 @@ pair<int, int> execute() {
   int max_after = 0;
   for (auto const &i : registers)
     max_after = max(max_after, i.second);
-  return { max_after, max_during };
+  return {max_after, max_during};
 }
 
 void part1() { cout << execute().first << '\n'; }

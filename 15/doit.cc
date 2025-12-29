@@ -17,8 +17,8 @@ struct generator {
   num state;
   num mask;
 
-  generator(num scale_, num seed, num mask_) :
-    scale(scale_), state(seed), mask(mask_) {}
+  generator(num scale_, num seed, num mask_)
+      : scale(scale_), state(seed), mask(mask_) {}
 
   num next() {
     do

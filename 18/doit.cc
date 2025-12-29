@@ -59,12 +59,18 @@ struct process {
     return n;
   }
 
-  void snd(num n) { ++num_sends; sent.push_back(n); }
+  void snd(num n) {
+    ++num_sends;
+    sent.push_back(n);
+  }
   // rcv behavior varies depending on part 1 or 2
   void rcv(reg_imm const &arg);
   // Regular pc incrementing is going to add one, so have to adjust
   // for that
-  void jgz(num test, num offset) { if (test > 0) pc += offset - 1; }
+  void jgz(num test, num offset) {
+    if (test > 0)
+      pc += offset - 1;
+  }
 
   // Try to execute instructions, return true if any progress was
   // made.  false indicates either already terminated or blocked
@@ -81,12 +87,12 @@ process::process() {
   for (size_t i = 0; i < reg.size(); ++i)
     reg[i] = 0;
   auto ri = []() -> reg_imm {
-              string arg;
-              cin >> arg;
-              if (arg.length() == 1 && arg[0] >= 'a' && arg[0] <= 'z')
-                return { true, arg[0] - 'a' };
-              return { false, stoi(arg) };
-            };
+    string arg;
+    cin >> arg;
+    if (arg.length() == 1 && arg[0] >= 'a' && arg[0] <= 'z')
+      return {true, arg[0] - 'a'};
+    return {false, stoi(arg)};
+  };
   auto add = [&](instr const &i) { instructions.push_back(i); };
   string op;
   while (cin >> op) {
@@ -98,26 +104,24 @@ process::process() {
     else {
       reg_imm arg2 = ri();
       if (op == "set")
-        add([=](process &player) {
-              player.set(arg1, player.get(arg2));
-            });
+        add([=](process &player) { player.set(arg1, player.get(arg2)); });
       else if (op == "add")
         add([=](process &player) {
-              player.set(arg1, player.get(arg1) + player.get(arg2));
-            });
+          player.set(arg1, player.get(arg1) + player.get(arg2));
+        });
       else if (op == "mul")
         add([=](process &player) {
-              player.set(arg1, player.get(arg1) * player.get(arg2));
-            });
+          player.set(arg1, player.get(arg1) * player.get(arg2));
+        });
       else if (op == "mod")
         add([=](process &player) {
-              player.set(arg1, player.get(arg1) % player.get(arg2));
-            });
+          player.set(arg1, player.get(arg1) % player.get(arg2));
+        });
       else {
         assert(op == "jgz");
         add([=](process &player) {
-              player.jgz(player.get(arg1), player.get(arg2));
-            });
+          player.jgz(player.get(arg1), player.get(arg2));
+        });
       }
     }
   }

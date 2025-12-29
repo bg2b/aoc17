@@ -99,7 +99,7 @@ void part2() {
   vector<int> lengths;
   for (auto c : bytes)
     lengths.push_back(c);
-  for (int extra : { 17, 31, 73, 47, 23 })
+  for (int extra : {17, 31, 73, 47, 23})
     lengths.push_back(extra);
   hasher h(lengths);
   for (int _ = 0; _ < 64; ++_)

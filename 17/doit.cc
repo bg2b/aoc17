@@ -19,7 +19,7 @@ using namespace std;
 void part1() {
   unsigned stride;
   cin >> stride;
-  vector<unsigned> buf{ 0 };
+  vector<unsigned> buf{0};
   for (int step = 0; step < 2017; ++step) {
     unsigned shift = stride % buf.size();
     // Advancing forward is rotating the buffer to the left, since the

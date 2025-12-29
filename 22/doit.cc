@@ -13,7 +13,7 @@ using namespace std;
 using coords = pair<int, int>;
 
 coords operator+(coords const &c1, coords const &c2) {
-  return { c1.first + c2.first, c1.second + c2.second };
+  return {c1.first + c2.first, c1.second + c2.second};
 }
 
 // This one beats on the state enough that it's worthwhile using a
@@ -25,9 +25,9 @@ struct hash_coords {
   }
 };
 
-coords left(coords const &dir) { return { -dir.second, dir.first }; }
-coords right(coords const &dir) { return { dir.second, -dir.first }; }
-coords reverse(coords const &dir) { return { -dir.first, -dir.second }; }
+coords left(coords const &dir) { return {-dir.second, dir.first}; }
+coords right(coords const &dir) { return {dir.second, -dir.first}; }
+coords reverse(coords const &dir) { return {-dir.first, -dir.second}; }
 
 enum status { clean = 0, weakened, infected, flagged, nstatus };
 
@@ -36,9 +36,9 @@ status cycle(status s) { return status((s + 1) % nstatus); }
 
 struct grid {
   // The carrier's position
-  coords carrier{ 0, 0 };
+  coords carrier{0, 0};
   // The direction the carrier is moving
-  coords dir{ 0, +1 };
+  coords dir{0, +1};
   // Nodes whose state has been set (everything else is clean)
   unordered_map<coords, status, hash_coords> state;
   // How many infections were caused?
@@ -90,10 +90,18 @@ void grid::burst(bool evolved) {
   status s = at(carrier);
   set_status(carrier, evolved ? cycle(s) : toggle(s));
   switch (s) {
-  case clean: dir = left(dir); break;
-  case infected: dir = right(dir); break;
-  case flagged: dir = reverse(dir); break;
-  default: assert(s == weakened); break;
+  case clean:
+    dir = left(dir);
+    break;
+  case infected:
+    dir = right(dir);
+    break;
+  case flagged:
+    dir = reverse(dir);
+    break;
+  default:
+    assert(s == weakened);
+    break;
   }
   carrier = carrier + dir;
 }

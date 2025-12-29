@@ -64,7 +64,7 @@ void search(vector<int> &bridge, vector<char> &used,
 
 void solve(function<void(int strength, size_t len)> check) {
   read();
-  vector<int> bridge{ 0 };
+  vector<int> bridge{0};
   vector<char> used(components.size(), 0);
   search(bridge, used, check);
 }
@@ -79,12 +79,12 @@ void part2() {
   int strongest = 0;
   size_t longest = 0;
   solve([&](int strength, size_t length) {
-          if (length > longest) {
-            longest = length;
-            strongest = strength;
-          } else if (length == longest)
-            strongest = max(strongest, strength);
-        });
+    if (length > longest) {
+      longest = length;
+      strongest = strength;
+    } else if (length == longest)
+      strongest = max(strongest, strength);
+  });
   cout << strongest << '\n';
 }
 

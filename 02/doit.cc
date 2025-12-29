@@ -29,21 +29,21 @@ void solve(function<int(vector<int> &row)> fn) {
 
 void part1() {
   solve([](vector<int> &row) {
-          auto [min, max] = minmax_element(row.begin(), row.end());
-          return *max - *min;
-        });
+    auto [min, max] = minmax_element(row.begin(), row.end());
+    return *max - *min;
+  });
 }
 
 void part2() {
   solve([](vector<int> &row) {
-          sort(row.begin(), row.end());
-          assert(row.front() > 0);
-          for (size_t i = 0; i < row.size(); ++i)
-            for (size_t j = i + 1; j < row.size(); ++j)
-              if (row[j] % row[i] == 0)
-                return row[j] / row[i];
-          return 0;
-        });
+    sort(row.begin(), row.end());
+    assert(row.front() > 0);
+    for (size_t i = 0; i < row.size(); ++i)
+      for (size_t j = i + 1; j < row.size(); ++j)
+        if (row[j] % row[i] == 0)
+          return row[j] / row[i];
+    return 0;
+  });
 }
 
 int main(int argc, char **argv) {

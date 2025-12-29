@@ -21,18 +21,18 @@ using particle = array<vec, 3>;
 
 vector<particle> read() {
   auto getvec = [](string const &s, char v) {
-                  auto start = s.find(v);
-                  assert(start != string::npos && start + 8 < s.length());
-                  assert(s[start + 1] == '=' && s[start + 2] == '<');
-                  auto end = s.find('>', start + 1);
-                  assert(end != string::npos);
-                  string xyz = s.substr(start + 3, end - start + 1 - 4);
-                  char comma;
-                  stringstream ss(xyz);
-                  vec result;
-                  ss >> result[0] >> comma >> result[1] >> comma >> result[2];
-                  return result;
-                };
+    auto start = s.find(v);
+    assert(start != string::npos && start + 8 < s.length());
+    assert(s[start + 1] == '=' && s[start + 2] == '<');
+    auto end = s.find('>', start + 1);
+    assert(end != string::npos);
+    string xyz = s.substr(start + 3, end - start + 1 - 4);
+    char comma;
+    stringstream ss(xyz);
+    vec result;
+    ss >> result[0] >> comma >> result[1] >> comma >> result[2];
+    return result;
+  };
   vector<particle> result;
   string line;
   while (getline(cin, line)) {
@@ -47,16 +47,15 @@ vector<particle> read() {
 
 void part1() {
   auto particles = read();
-  auto slowest =
-    min_element(particles.begin(), particles.end(),
-                [](particle const &p1, particle const &p2) {
-                  // Only acceleration matters in the end
-                  auto const &a1 = p1[2];
-                  auto const &a2 = p2[2];
-                  int mag1 = abs(a1[0]) + abs(a1[1]) + abs(a1[2]);
-                  int mag2 = abs(a2[0]) + abs(a2[1]) + abs(a2[2]);
-                  return mag1 < mag2;
-                });
+  auto slowest = min_element(particles.begin(), particles.end(),
+                             [](particle const &p1, particle const &p2) {
+                               // Only acceleration matters in the end
+                               auto const &a1 = p1[2];
+                               auto const &a2 = p2[2];
+                               int mag1 = abs(a1[0]) + abs(a1[1]) + abs(a1[2]);
+                               int mag2 = abs(a2[0]) + abs(a2[1]) + abs(a2[2]);
+                               return mag1 < mag2;
+                             });
   cout << slowest - particles.begin() << '\n';
 }
 
@@ -85,7 +84,7 @@ vector<int> collision(int p1, int v1, int a1, int p2, int v2, int a2) {
   int c = 2 * (p2 - p1);
   if (a == 0 && b == 0 && c == 0)
     // Colliding at all times
-    return { -1 };
+    return {-1};
   if (a == 0 && b == 0)
     // Never colliding
     return {};
@@ -94,7 +93,7 @@ vector<int> collision(int p1, int v1, int a1, int p2, int v2, int a2) {
     int t = -c / b;
     if (t < 0 || b * t + c != 0)
       return {};
-    return { t };
+    return {t};
   }
   // General quadratic
   int discriminant = b * b - 4 * a * c;
@@ -107,9 +106,9 @@ vector<int> collision(int p1, int v1, int a1, int p2, int v2, int a2) {
     return {};
   vector<int> result;
   auto maybe = [&](int t) {
-                 if (t >= 0 && a * t * t + b * t + c == 0)
-                   result.push_back(t);
-               };
+    if (t >= 0 && a * t * t + b * t + c == 0)
+      result.push_back(t);
+  };
   maybe((-b + sqrt_disc) / (2 * a));
   if (sqrt_disc != 0)
     // No need for repeated roots
@@ -124,12 +123,12 @@ vector<int> collision(int p1, int v1, int a1, int p2, int v2, int a2) {
 optional<int> collision(particle const &p1, particle const &p2) {
   vector<int> all_ts;
   for (int i = 0; i < 3; ++i) {
-    auto ts = collision(p1[0][i], p1[1][i], p1[2][i],
-                        p2[0][i], p2[1][i], p2[2][i]);
+    auto ts =
+        collision(p1[0][i], p1[1][i], p1[2][i], p2[0][i], p2[1][i], p2[2][i]);
     if (ts.empty())
       // No collision in this dimension
       return nullopt;
-    if (ts == vector<int>{ -1 })
+    if (ts == vector<int>{-1})
       // No constraint in this dimension
       continue;
     if (all_ts.empty()) {
@@ -140,8 +139,7 @@ optional<int> collision(particle const &p1, particle const &p2) {
     // Already some constraints from previous dimensions
     vector<int> next_all_ts;
     // Note that results from the 1D collision() are sorted
-    set_intersection(all_ts.begin(), all_ts.end(),
-                     ts.begin(), ts.end(),
+    set_intersection(all_ts.begin(), all_ts.end(), ts.begin(), ts.end(),
                      back_inserter(next_all_ts));
     all_ts = next_all_ts;
   }
