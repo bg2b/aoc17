@@ -101,7 +101,7 @@ void part2() {
   // set b 93
   b = 93;
   // set c b
-  c = b;
+  // c = b;  /* This one is useless, shut up clang-tidy */
   // mul b 100
   b *= 100;
   // sub b -100000
